@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Http\Resources\UserFavouriteArtistsResource;
 use App\Models\UserFavouriteArtist;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection as AnonymousResourceCollectionAlias;
+use Illuminate\Support\Facades\Auth;
 
 class UserFavouriteArtistsService{
 
@@ -17,29 +18,28 @@ class UserFavouriteArtistsService{
     }
 
 
-    public function getArtists($request): AnonymousResourceCollectionAlias
+    public function getArtists($user): AnonymousResourceCollectionAlias
     {
-        $user = $request->user();
 
         return UserFavouriteArtistsResource::collection($user->favouriteArtists()->get());
 
     }
 
-    public function createArtist($request): AnonymousResourceCollectionAlias
+    public function createArtist($user, $validatedArtist): UserFavouriteArtistsResource
     {
 
-        $newArtist = UserFavouriteArtist::create($request);
+        $newArtist = $user->favouriteArtists()->create($validatedArtist);
 
-        return UserFavouriteArtistsResource::collection($newArtist);
+        return new UserFavouriteArtistsResource($newArtist);
 
     }
 
-    public function updateArtist($userFavouriteArtist , $request): AnonymousResourceCollectionAlias
+    public function updateArtist($userFavouriteArtist , $request): UserFavouriteArtistsResource
     {
 
-        $updatedArtist = $userFavouriteArtist->update($request);
+        $userFavouriteArtist->update($request);
 
-        return UserFavouriteArtistsResource::collection($updatedArtist);
+        return new UserFavouriteArtistsResource($userFavouriteArtist);
 
     }
 

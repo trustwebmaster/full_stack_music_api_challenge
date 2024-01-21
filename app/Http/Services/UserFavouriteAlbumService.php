@@ -4,44 +4,29 @@ namespace App\Http\Services;
 
 
 use App\Http\Resources\UserFavouriteAlbumResource;
-use App\Http\Services\ResponseService;
-use App\Models\UserFavouriteAlbum;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection as AnonymousResourceCollectionAlias;
+
 
 class  UserFavouriteAlbumService{
 
-    protected ResponseService $responseService;
-
-    public function __construct(ResponseService $responseService)
+    public function getAlbums($user): AnonymousResourceCollectionAlias
     {
-        $this->responseService = $responseService;
-    }
-
-
-    public function getAlbums($request): AnonymousResourceCollectionAlias
-    {
-         $user = $request->user();
-
         return UserFavouriteAlbumResource::collection($user->favouriteAlbums()->get());
+    }
+
+    public function createAlbum($user , $validatedData): UserFavouriteAlbumResource
+    {
+        $newAlbum = $user->favouriteAlbums()->create($validatedData);
+
+        return new UserFavouriteAlbumResource($newAlbum);
 
     }
 
-    public function createAlbum($request): AnonymousResourceCollectionAlias
+    public function updateAlbum($userFavouriteAlbum , $request): UserFavouriteAlbumResource
     {
+        $userFavouriteAlbum->update($request);
 
-        $newAlbum = UserFavouriteAlbum::create($request);
-
-        return UserFavouriteAlbumResource::collection($newAlbum);
-
-    }
-
-    public function updateAlbum($userFavouriteAlbum , $request): AnonymousResourceCollectionAlias
-    {
-
-        $updatedAlbum = $userFavouriteAlbum->update($request);
-
-        return UserFavouriteAlbumResource::collection($updatedAlbum);
+        return new UserFavouriteAlbumResource($userFavouriteAlbum);
 
     }
 

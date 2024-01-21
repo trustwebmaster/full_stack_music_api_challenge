@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\User;
+use App\Models\UserFavouriteArtist;
 use Illuminate\Support\Facades\Hash;
 
 class UserService {
@@ -21,6 +22,14 @@ class UserService {
                  'password' => Hash::make(rand(100000,999999))
              ]);
 
+
+    }
+
+    public  static function getUserArtistByName($userId , $validatedArtist){
+
+        return UserFavouriteArtist::where('name', $validatedArtist['name'])
+            ->where('user_id' , $userId)
+            ->first();
 
     }
 

@@ -22,7 +22,6 @@ class UserFavouriteAlbumRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id'     => 'required|exists:users,id',
             'name'        => 'required|string|max:255',
             'artist_name' => 'required|string|max:255',
         ];
@@ -36,8 +35,6 @@ class UserFavouriteAlbumRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_id.required'     => 'User ID is required',
-            'user_id.exists'       => 'User does not exist',
             'name.required'        => 'Album name is required',
             'artist_name.required' => 'Artist name is required',
         ];

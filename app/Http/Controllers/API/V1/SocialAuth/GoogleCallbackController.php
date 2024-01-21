@@ -35,7 +35,7 @@ class GoogleCallbackController extends Controller
         }
 
         // Create a token
-        $tokenResult = $googleSocialUser->createToken('googleSignIn');
+        $tokenResult = $googleSocialUser->createToken('googleSignIn' , ['*'], now()->addWeek());
         $accessToken = $tokenResult->plainTextToken;
 
         return response()->json([

@@ -25,8 +25,6 @@ class GoogleAuthService {
 
             if (!$existingUser) {
                 $existingUser = $this->userService->createUser($googleUser);
-                Log::error('created User' . json_encode($existingUser));
-
 
             }
 

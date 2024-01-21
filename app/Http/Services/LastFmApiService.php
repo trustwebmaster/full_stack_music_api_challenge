@@ -14,9 +14,13 @@ class LastFmApiService{
     protected mixed $baseUrl;
     private Client $client;
 
+    protected ResponseService $responseService;
 
-    public function __construct()
+
+
+    public function __construct(ResponseService $responseService)
     {
+        $this->responseService = $responseService;
         $this->apiKey = config('services.lastfm.api_key');
         $this->baseUrl = config('services.lastfm.base_url');
         $this->client = new Client();
@@ -42,12 +46,7 @@ class LastFmApiService{
 
                 Log::error('Last Fm API Connection  Error: ' . $exception->getMessage());
 
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Last Fm API Connection'],
-                    ResponseAlias::HTTP_INTERNAL_SERVER_ERROR
-
-                );
+            return $this->responseService->errorResponse('Last Fm API Connection');
 
         }
 

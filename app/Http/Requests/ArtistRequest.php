@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserFavouriteArtistsRequest extends FormRequest
+class ArtistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,19 +22,7 @@ class UserFavouriteArtistsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => 'required|string|max:25',
-        ];
-    }
-
-    /**
-     * Get custom messages for validation errors.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'name.required' => 'Artist name is required',
+            'name' => 'required|string|max:255',
         ];
     }
 }

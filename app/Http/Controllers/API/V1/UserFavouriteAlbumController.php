@@ -5,12 +5,14 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserFavouriteAlbumRequest;
 use App\Http\Resources\UserFavouriteAlbumResource;
+use App\Http\Services\AlbumService;
 use App\Http\Services\ResponseService;
 use App\Http\Services\UserFavouriteAlbumService;
 use App\Models\UserFavouriteAlbum;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -20,10 +22,12 @@ class UserFavouriteAlbumController extends Controller
 
     public UserFavouriteAlbumService $userFavouriteAlbumService;
     public ResponseService $responseService;
+    public AlbumService $albumService;
 
-    public function __construct(UserFavouriteAlbumService $userFavouriteAlbumService , ResponseService $responseService){
-
+    public function __construct(UserFavouriteAlbumService $userFavouriteAlbumService, ResponseService $responseService , AlbumService $albumService)
+    {
         $this->userFavouriteAlbumService = $userFavouriteAlbumService;
+        $this->albumService = $albumService;
         $this->responseService = $responseService;
 
     }
@@ -33,7 +37,7 @@ class UserFavouriteAlbumController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $albumData =  $this->userFavouriteAlbumService->getAlbums($request);
+        $albumData =  $this->userFavouriteAlbumService->getAlbums($request->user());
 
         return $this->responseService->successResponse($albumData);
 
@@ -45,8 +49,17 @@ class UserFavouriteAlbumController extends Controller
     public function store(UserFavouriteAlbumRequest $request): JsonResponse
     {
         try {
+            $validatedAlbum = $request->validated();
 
-            $createdAlbum = $this->userFavouriteAlbumService->createAlbum($request->validated());
+            $validatedAlbum['album_slug'] =  Str::slug('zatec music api '.$request->input('name'));
+
+            $existingAlbum = $this->albumService->getUserAlbumByNameAndArtist($request->user()->id ,$validatedAlbum);
+
+            if($existingAlbum){
+                return $this->responseService->errorResponse('Album already exists as favourite', ResponseAlias::HTTP_FOUND);
+            }
+
+            $createdAlbum = $this->userFavouriteAlbumService->createAlbum($request->user() , $validatedAlbum);
 
             return $this->responseService->successResponse($createdAlbum);
 
@@ -70,9 +83,11 @@ class UserFavouriteAlbumController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(UserFavouriteAlbum $userFavouriteAlbum): JsonResponse
+    public function show($userFavouriteAlbumId): JsonResponse
     {
-        $userFavouriteAlbumCollection = UserFavouriteAlbumResource::collection($userFavouriteAlbum);
+        $userFavouriteAlbum = UserFavouriteAlbum::findOrFail($userFavouriteAlbumId);
+
+        $userFavouriteAlbumCollection = UserFavouriteAlbumResource::make($userFavouriteAlbum);
 
         return $this->responseService->successResponse($userFavouriteAlbumCollection);
     }
@@ -80,10 +95,13 @@ class UserFavouriteAlbumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserFavouriteAlbumRequest $userFavouriteAlbumRequest, UserFavouriteAlbum $userFavouriteAlbum): JsonResponse
+    public function update(UserFavouriteAlbumRequest $userFavouriteAlbumRequest,$userFavouriteAlbumId ): JsonResponse
     {
         try{
-        $updatedAlbum = $this->userFavouriteAlbumService->updateAlbum($userFavouriteAlbum , $userFavouriteAlbumRequest->validated());
+
+            $userFavouriteAlbum = UserFavouriteAlbum::findOrFail($userFavouriteAlbumId);
+
+            $updatedAlbum = $this->userFavouriteAlbumService->updateAlbum($userFavouriteAlbum , $userFavouriteAlbumRequest->validated());
 
         return $this->responseService->successResponse($updatedAlbum);
 
@@ -106,10 +124,11 @@ class UserFavouriteAlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserFavouriteAlbum $userFavouriteAlbum): JsonResponse
+    public function destroy($userFavouriteAlbumId): JsonResponse
     {
         try{
 
+            $userFavouriteAlbum = UserFavouriteAlbum::findOrFail($userFavouriteAlbumId);
             $userFavouriteAlbum->delete();
 
             return $this->responseService->successResponse('Album successfully removed from favorites');

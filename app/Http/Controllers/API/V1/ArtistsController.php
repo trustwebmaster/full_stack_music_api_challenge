@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArtistRequest;
 use App\Http\Services\LastFmApiService;
 use App\Http\Services\ResponseService;
 use GuzzleHttp\Client;
@@ -28,14 +29,12 @@ class ArtistsController extends Controller
     {
         try {
 
-            $searchQuery = $request->input('query', '');
+            $searchQuery = $request->input('name');
             $apiMethod = 'artist.search';
 
             $data = $this->lastFmApiService->getLastFmApiClient($apiMethod , $searchQuery , self::API_TYPE_ARTIST);
 
             $artists = $data['results']['artistmatches']['artist'] ?? [];
-
-            return $artists;
 
             return $this->responseService->successResponse($artists ?: 'No artists were found');
 
@@ -54,7 +53,7 @@ class ArtistsController extends Controller
     public function viewArtist(Request $request){
         try {
 
-            $searchQuery = $request->input('name', '');
+            $searchQuery = $request->input('name');
             $apiMethod = 'artist.getinfo';
 
             $data = $this->lastFmApiService->getLastFmApiClient($apiMethod , $searchQuery , self::API_TYPE_ARTIST);

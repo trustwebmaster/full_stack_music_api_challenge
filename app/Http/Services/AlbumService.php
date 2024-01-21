@@ -11,4 +11,16 @@ class AlbumService {
         return UserFavouriteAlbum::where('user_id', $userId)->first();
 
     }
+
+
+    public  static function getUserAlbumByNameAndArtist($userId , $validatedAlbum){
+
+        return UserFavouriteAlbum::where('name', $validatedAlbum['name'])
+                                   ->where('artist_name' , $validatedAlbum['artist_name'])
+                                   ->where('user_id' , $userId)
+                                    ->first();
+
+    }
+
+
 }
