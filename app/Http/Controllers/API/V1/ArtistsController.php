@@ -33,7 +33,6 @@ class ArtistsController extends Controller
             $apiMethod = 'artist.search';
 
             $data = $this->lastFmApiService->getLastFmApiClient($apiMethod , $searchQuery , self::API_TYPE_ARTIST);
-
             $artists = $data['results']['artistmatches']['artist'] ?? [];
 
             return $this->responseService->successResponse($artists ?: 'No artists were found');

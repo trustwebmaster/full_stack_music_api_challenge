@@ -18,3 +18,6 @@ Ensure you have the following prerequisites installed on your machine:
 2. **Navigate to Project Directory:**
    ```bash
    cd zatec-full-stack-challenge
+   
+3.**Install Laravel Dependencies:**
+   ```bash
