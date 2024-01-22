@@ -59,7 +59,7 @@ class UserFavouriteArtistsController extends Controller
 
             $createdArtist = $this->userFavouriteArtistService->createArtist($request->user(), $validatedArtist);
 
-            return $this->responseService->successResponse($createdArtist);
+            return $this->responseService->successResponse($createdArtist , ResponseAlias::HTTP_CREATED);
 
         } catch (ValidationException $validationException) {
             $errors = $validationException->errors();

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArtistRequest extends FormRequest
+class UserAuthStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,15 +21,20 @@ class ArtistRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-        ];
+             return [
+                 'name' => 'required|string',
+                 'email' => 'required|email|string|unique:users,email',
+                 'password' => 'required|min:8',
+
+             ];
     }
 
     public function messages()
     {
         return [
-            'name.required'        => 'Artist name is required',
+            'name.required'        => 'Name is required',
+            'email.required'       => 'Email name is required',
+            'password.required'    => 'Password name is required',
         ];
     }
 }

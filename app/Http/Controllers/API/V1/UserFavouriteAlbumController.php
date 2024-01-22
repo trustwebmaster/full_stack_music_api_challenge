@@ -61,7 +61,7 @@ class UserFavouriteAlbumController extends Controller
 
             $createdAlbum = $this->userFavouriteAlbumService->createAlbum($request->user() , $validatedAlbum);
 
-            return $this->responseService->successResponse($createdAlbum);
+            return $this->responseService->successResponse($createdAlbum , ResponseAlias::HTTP_CREATED);
 
         }catch (ValidationException $validationException) {
 

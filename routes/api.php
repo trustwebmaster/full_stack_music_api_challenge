@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\V1\AlbumController;
 use App\Http\Controllers\API\V1\ArtistsController;
+use App\Http\Controllers\API\V1\Auth\UserAuthController;
 use App\Http\Controllers\API\V1\SocialAuth\GoogleCallbackController;
 use App\Http\Controllers\API\V1\SocialAuth\GoogleRedirectController;
 use App\Http\Controllers\API\V1\UserFavouriteAlbumController;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('auth')->group( function () {
-    Route::get('/google/redirect', GoogleRedirectController::class);
+    Route::get('/google/redirect', GoogleRedirectController::class)->name('google.redirect');
     Route::get('/google/callback',  GoogleCallbackController::class);
 });
 
@@ -37,3 +38,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/favourite/artists', UserFavouriteArtistsController::class);
 });
 
+
+Route::post('register', [UserAuthController::class, 'register'])->name('register');
+Route::post('login', [UserAuthController::class, 'login'])->name('login');
