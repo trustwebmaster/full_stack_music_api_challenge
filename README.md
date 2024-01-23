@@ -4,8 +4,8 @@ Welcome to the ZATEC Full Stack Coding Challenge! This project is a full-stack a
 
 ## Requirements
 Ensure you have the following prerequisites installed on your machine:
-- PHP version **8.0** or above
-- Node.js version **12.0** or above
+- PHP version **8.1** or above
+- Node.js version **14.0** or above
 
 ## Installation
 
@@ -13,11 +13,11 @@ Ensure you have the following prerequisites installed on your machine:
 
 1. **Clone the Project:**
    ```bash
-   git clone https://github.com/your-username/zatec-full-stack-challenge.git
+   git clone https://github.com/trustwebmaster/full_stack_music_api_challenge.git
 
 2. **Navigate to Project Directory:**
    ```bash
-   cd zatec-full-stack-challenge
+   cd full_stack_music_api_challenge
    
 3. **Install Laravel Dependencies:**
    ```bash
