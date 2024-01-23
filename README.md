@@ -46,8 +46,8 @@ Ensure you have the following prerequisites installed on your machine:
     npm install
 
 3. **Configure Vue.js Environment:**
-   Duplicate the vue/.env.example file to create a new vue/.env file.
-   Open vue/.env and specify the API URL according to your Laravel backend.
+   Duplicate the frontend/.env.example file to create a new frontend/.env file.
+   Open frontend/.env and specify the API URL according to your Laravel backend.
 
 4. **Run Vue.js with Docker:**
    ./vendor/bin/sail up
