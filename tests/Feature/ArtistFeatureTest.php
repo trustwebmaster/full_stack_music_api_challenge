@@ -98,7 +98,7 @@ class ArtistFeatureTest extends TestCase
 
         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
             ->delete(route('artists.destroy', ['artist' => $artist->id]));
-        
+
         $response->assertStatus(200);
     }
 
