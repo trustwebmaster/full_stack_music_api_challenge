@@ -38,7 +38,6 @@ class UserFavouriteAlbumController extends Controller
     public function index(Request $request): JsonResponse
     {
         $albumData =  $this->userFavouriteAlbumService->getAlbums($request->user());
-
         return $this->responseService->successResponse($albumData);
 
     }
@@ -50,7 +49,6 @@ class UserFavouriteAlbumController extends Controller
     {
         try {
             $validatedAlbum = $request->validated();
-
             $validatedAlbum['album_slug'] =  Str::slug('zatec music api '.$request->input('name'));
 
             $existingAlbum = $this->albumService->getUserAlbumByNameAndArtist($request->user()->id ,$validatedAlbum);
@@ -127,7 +125,6 @@ class UserFavouriteAlbumController extends Controller
     public function destroy($userFavouriteAlbumId): JsonResponse
     {
         try{
-
             $userFavouriteAlbum = UserFavouriteAlbum::findOrFail($userFavouriteAlbumId);
             $userFavouriteAlbum->delete();
 

@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('register', [UserAuthController::class, 'register'])->name('register');
+Route::post('login', [UserAuthController::class, 'login'])->name('login');
+
 
 Route::prefix('auth')->group( function () {
     Route::get('/google/redirect', GoogleRedirectController::class)->name('google.redirect');
@@ -37,7 +40,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/favourite/albums', UserFavouriteAlbumController::class);
     Route::apiResource('/favourite/artists', UserFavouriteArtistsController::class);
 });
-
-
-Route::post('register', [UserAuthController::class, 'register'])->name('register');
-Route::post('login', [UserAuthController::class, 'login'])->name('login');

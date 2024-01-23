@@ -54,10 +54,10 @@ const store = createStore({
         })
     },
     googleCallback({commit}, payload) {
-      return axiosClient.get('/google/callback')
+      return axiosClient.get('/auth/google/callback')
         .then(({data}) => {
           commit('setUser', data.user);
-          commit('setToken', data.token)
+          commit('setToken', data.access_token)
           return data;
         })
     },
