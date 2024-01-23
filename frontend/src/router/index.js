@@ -1,15 +1,15 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Artists from "../pages/dashboard/Artists.vue";
-import Albums from "../pages/dashboard/Albums.vue";
+import Artists from "../pages/views/artists/ArtistLists.vue";
+import Albums from "../pages/views/albums/AlbumLists.vue";
 import Login from "../pages/auth/Login.vue";
 import Register from "../pages/auth/Register.vue";
-import DefaultLayout from "../components/DefaultLayout.vue";
-import AuthLayout from "../components/AuthLayout.vue";
+import DefaultLayout from "../components/layouts/Layout.vue";
+import AuthLayout from "../components/layouts/auth/SignInLayout.vue";
 import store from "../store/index.js";
-import Favorites from "../pages/dashboard/Favorites.vue";
+import Favorites from "../pages/views/favourites/Favorites.vue";
 import Google from "../pages/auth/GoogleSignIn.vue";
-import ArtistView from "../pages/dashboard/ArtistView.vue";
-import AlbumView from "../pages/dashboard/AlbumView.vue";
+import ArtistView from "../pages/views/artists/Artist.vue";
+import AlbumView from "../pages/views/albums/Album.vue";
 
 const routes = [
   {

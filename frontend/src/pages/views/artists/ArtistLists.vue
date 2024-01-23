@@ -1,6 +1,6 @@
 <template>
   <PageComponent>
-    <form @submit="searchAlbum">
+    <form @submit="searchArtists">
       <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
       <div class="relative">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -13,7 +13,7 @@
         <input
           type="search" id="search"
           class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search for Albums..."
+          placeholder="Search for Artists..."
           v-model="search">
         <button type="submit"
                 @click="toggle = !toggle"
@@ -27,27 +27,27 @@
       <div v-show='!toggle' class="whitespace-pre-line">
         <h4
           class="pb-6 mt-6 text-md font-extrabold text-gray-900">
-          Albums
+          Artist
         </h4>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
         <div
-          v-for="album in albums"
-          :key="album.name"
+          v-for="artist in artists"
+          :key="artist.name"
           class="max-w-sm bg-white"
         >
-          <router-link :to="{ name: 'AlbumView', params: {artist: album.artist, name: album.name} }">
-            <img class="h-auto max-w-full rounded-lg" :src="album.image[2]['#text']" alt="">
+          <router-link :to="{ name: 'ArtistView', params: {name: artist.name} }">
+            <img class="h-auto max-w-full rounded-lg" :src="artist.image[2]['#text']" alt="">
           </router-link>
           <div class="p-5">
             <router-link
-              :to="{ name: 'AlbumView', params: {artist: album.artist, name: album.name} }"
+              :to="{ name: 'ArtistView', params: {name: artist.name} }"
               class="text-blue-700 hover:underline dark:text-blue-500"
             >
-              <p class="mb-2 font-bold tracking-tight text-gray-900 dark:text-gray-900">{{ album.name }}</p>
+              <p class="mb-2 font-bold tracking-tight text-gray-900 dark:text-gray-900">{{ artist.name }}</p>
             </router-link>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ album.artist }}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ 'listeners: '+artist.listeners }}</p>
           </div>
         </div>
       </div>
@@ -56,36 +56,35 @@
 </template>
 
 <script>
-import PageComponent from "../../components/PageComponent.vue";
-import { ref} from "vue";
-import store from "../../store/index.js";
+import PageComponent from "../../../components/layouts/PageComponent.vue";
+import {ref} from "vue";
+import store from "../../../store/index.js";
 
 export default {
   components: {
     PageComponent
   },
   setup() {
-    const search = ref('');
-    const albums = ref([]);
+    const search = ref("");
+    const artists = ref([]);
 
-    function searchAlbum(ev) {
+    function searchArtists(ev) {
       ev.preventDefault();
       if (search.value !== "") {
         store
-          .dispatch('searchAlbum', search.value)
-          .then(data => {
-            albums.value = data.data;
-          })
+          .dispatch('searchArtist', search.value)
+          .then( response => {
+              artists.value = response.data;
+          });
       }
     }
 
     return {
       search,
-      albums,
-      searchAlbum,
+      artists,
+      searchArtists,
       toggle: true
     }
-
   }
 }
 </script>

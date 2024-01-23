@@ -43,9 +43,9 @@
 
 <script>
 import { useRoute, useRouter } from "vue-router";
-import store from "../../store/index.js";
+import store from "../../../store/index.js";
 import { ref } from "vue";
-import PageViewHeadComponent from "../../components/PageViewHeadComponent.vue";
+import PageViewHeadComponent from "../../../components/layouts/HeaderComponent.vue";
 import {data} from "autoprefixer";
 
 export default {

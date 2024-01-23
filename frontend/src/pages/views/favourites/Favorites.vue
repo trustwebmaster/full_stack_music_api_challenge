@@ -115,9 +115,9 @@
 </template>
 
 <script>
-import PageComponent from "../../components/PageComponent.vue";
+import PageComponent from "../../../components/layouts/PageComponent.vue";
 import {ref} from "vue";
-import store from "../../store/index.js";
+import store from "../../../store/index.js";
 import {useRouter} from "vue-router";
 
 export default {
