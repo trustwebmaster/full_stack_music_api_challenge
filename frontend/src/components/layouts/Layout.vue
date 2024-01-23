@@ -8,8 +8,8 @@
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <img
-                                class="h-10 w-10 text-white"
-                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                                class="h-20 w-20 text-white"
+                                src="https://blocks.primevue.org/images/blocks/logos/hyper-300.svg"
                                 alt="Workflow"
                             />
                         </div>

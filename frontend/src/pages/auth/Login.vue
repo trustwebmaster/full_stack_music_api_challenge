@@ -56,12 +56,7 @@ export default {
                 });
         }
 
-        return {
-            user,
-            google,
-            login,
-            errorMsg,
-            loading,
+        return { user, google, login, errorMsg, loading,
         };
     },
 }
@@ -75,7 +70,7 @@ export default {
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
             <div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-                <form class="space-y-6" @submit.prevent="login">
+                <form class="space-y-6" @submit="login">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div class="mt-2">
@@ -98,7 +93,41 @@ export default {
                     </div>
 
                     <div>
-                        <button type="submit" :disabled="loading" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                        <button
+                            type="submit"
+                            :disabled="loading"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
+                            :class="{'cursor-not-allowed': loading,  'hover:bg-indigo-500': loading, }"
+                        >
+                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                              <LockClosedIcon
+                                  class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                                  aria-hidden="true"
+                              />
+                            </span>
+                            <svg
+                                v-if="loading"
+                                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    class="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    stroke-width="4"
+                                ></circle>
+                                <path
+                                    class="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
+                            Login to your account
+                        </button>
                     </div>
                 </form>
 
