@@ -1,11 +1,9 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <PageViewHeadComponent>
-        <template v-slot:name-rank>
-            <h4 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{ artist.name }}</h4>
-            <h4 class="mb-2 text-2xl text-gray-900 dark:text-white" v-if="artist.stats">{{ 'Listeners - ' + artist.stats.listeners }}</h4>
-            <p class="mb-3 text-lg italic text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" v-if="artist.bio && artist.bio.published">
-                {{ artist.bio.published }}
-            </p>
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-6 sm:px-6">
+            <h3 class="text-base font-semibold leading-7 text-gray-900">Artist Details </h3>
+            <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details.</p>
             <button @click="favoriteArtist"
                     class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -15,66 +13,54 @@
                 </svg>
                 Add to Favorites
             </button>
-            <p class="text-white dark:text-white">
-                {{ artist.url }}
-            </p>
-        </template>
-        <template v-slot:image>
-            <img
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:rotate-3 group-hover:scale-125"
-                :src="artist.image && artist.image[3] ? artist.image[3]['#text'] : ''" alt=""
-            />
-        </template>
-        <template v-slot:image-info>
-            <h1 class="font-dmserif text-3xl font-bold text-white">{{ artist.name }}</h1>
-            <button
-                class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                     class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>
-                </svg>
-                {{ artist.stats ? artist.stats.playcount : '' }}
-            </button>
-        </template>
-
-        <div>
-            <div class="whitespace-pre-line">
-                <p
-                    class="mb-3 font-light text-gray-600 dark:text-gray-500 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-600 first-letter:mr-3 first-letter:float-left">
-                    {{ artist.bio && artist.bio.content ? artist.bio.content : '' }}
-                </p>
-            </div>
-
-            <div class="whitespace-pre-line flex justify-between items-center sm:flex sm:space-y-0 sm:space-x-4">
-                <div>
-                    <h4
-                        class="pb-6 mt-6 text-md font-extrabold text-gray-900">
-                        Similar Artist
-                    </h4>
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <tbody>
-                        <tr
-                            v-for="similarArtist in artist.similar && artist.similar.artist ? artist.similar.artist : []"
-                            :key="similarArtist.url"
-                            class="bg-white border-b dark:bg-white dark:border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-200">
-                            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" :src="similarArtist.image && similarArtist.image[2] ? similarArtist.image[2]['#text'] : ''" alt="">
-                                <div class="pl-3">
-                                    <div class="text-base text-gray-900 font-semibold">{{ similarArtist.name }}</div>
-                                    <div class="font-normal text-gray-400">{{ similarArtist.url }}</div>
-                                </div>
-                            </th>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div>
-
-                </div>
-            </div>
         </div>
+        <div class="border-t border-gray-100">
+            <dl class="divide-y divide-gray-100">
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Full name</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ artist.name }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Listeners</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0" v-if="artist.stats">{{ 'Listeners - ' + artist.stats.listeners }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Bio and Publishing Date</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0" v-if="artist.bio && artist.bio.published">
+                        {{ artist.bio.published }} </dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Salary expectation</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">$120,000</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">About</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ artist.bio && artist.bio.content ? artist.bio.content : '' }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Similar Attachments</dt>
+                    <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+
+                            <li v-for="similarArtist in artist.similar && artist.similar.artist ? artist.similar.artist : []"
+                                :key="similarArtist.url"
+                                class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                <div class="flex w-0 flex-1 items-center">
+                                    <PaperClipIcon class="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                        <span class="truncate font-medium">{{ similarArtist.name }}</span>
+                                        <span class="flex-shrink-0 text-gray-400">{{ similarArtist.url }}</span>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
     </PageViewHeadComponent>
 </template>
 
@@ -83,6 +69,7 @@ import { useRoute, useRouter } from "vue-router";
 import store from "../../../store/index.js";
 import { ref } from "vue";
 import PageViewHeadComponent from "../../../components/layouts/HeaderComponent.vue";
+import { PaperClipIcon } from '@heroicons/vue/20/solid';
 
 export default {
     name: "ArtistView",
