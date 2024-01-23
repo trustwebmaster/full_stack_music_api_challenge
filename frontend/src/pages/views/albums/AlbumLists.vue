@@ -12,14 +12,14 @@
         </div>
         <input
           type="search" id="search"
-          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Search for Albums..."
+          class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Search for Most Popular Albums"
           v-model="search">
-        <button type="submit"
-                @click="toggle = !toggle"
-                class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Search
-        </button>
+          <button type="submit"
+                  @click="toggle = !toggle"
+                  class="text-white absolute right-2.5 bottom-2.5 bg-purple-100 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-purple-800 dark:hover:bg-blue-700 dark:focus:ring-purple-800">
+              Search
+          </button>
       </div>
     </form>
 
@@ -27,30 +27,26 @@
       <div v-show='!toggle' class="whitespace-pre-line">
         <h4
           class="pb-6 mt-6 text-md font-extrabold text-gray-900">
-          Albums
+            Results For Searched Album
         </h4>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
-        <div
-          v-for="album in albums"
-          :key="album.name"
-          class="max-w-sm bg-white"
-        >
-          <router-link :to="{ name: 'AlbumView', params: {artist: album.artist, name: album.name} }">
-            <img class="h-auto max-w-full rounded-lg" :src="album.image[2]['#text']" alt="">
-          </router-link>
-          <div class="p-5">
-            <router-link
-              :to="{ name: 'AlbumView', params: {artist: album.artist, name: album.name} }"
-              class="text-blue-700 hover:underline dark:text-blue-500"
-            >
-              <p class="mb-2 font-bold tracking-tight text-gray-900 dark:text-gray-900">{{ album.name }}</p>
-            </router-link>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ album.artist }}</p>
-          </div>
+        <div class="bg-white py-24 sm:py-32">
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6">
+                    <li v-for="album in albums">
+                        <router-link
+                            :to="{ name: 'AlbumView', params: {artist: album.artist, name: album.name} }"
+                            class="text-blue-700 hover:underline dark:text-blue-500"
+                        >
+                            <img :src="album.image[2]['#text']" alt="" class="mx-auto h-24 w-24 rounded-full"/>
+                            <h3 class="mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900">{{ album.name }}</h3>
+                            <p class="text-sm leading-6 text-gray-600">{{ 'Artist : ' +album.artist }}</p>
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </div>
   </PageComponent>
 </template>
