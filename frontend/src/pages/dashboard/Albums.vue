@@ -74,7 +74,7 @@ export default {
         store
           .dispatch('searchAlbum', search.value)
           .then(data => {
-            albums.value = data.results.albummatches.album;
+            albums.value = data.data;
           })
       }
     }

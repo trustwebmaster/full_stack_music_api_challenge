@@ -19,20 +19,6 @@
         </div>
       </div>
 
-      <div class="hidden lg:mt-0 lg:col-span-5 lg:flex ">
-        <div
-          class="group relative cursor-pointer items-center justify-center overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
-          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <slot name="image"></slot>
-          </div>
-          <div
-            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/90 group-hover:via-black/80 group-hover:to-black/90"></div>
-          <div
-            class="absolute inset-0 flex translate-y-[90%] flex-col items-center justify-center px-9 text-center transition-all duration-500 group-hover:translate-y-0">
-            <slot name="image-info"></slot>
-          </div>
-        </div>
-      </div>
 
       <div class="hidden lg:mt-0 lg:col-span-5 lg:flex ">
 

@@ -60,16 +60,16 @@ export default {
     let userId = ref('')
 
     if (route.params.name) {
-      store.dispatch('getCurrentAlbum', route.params.artist, route.params.name)
+      store.dispatch('getCurrentAlbum', {artist : route.params.artist, album : route.params.name})
         .then(data => {
-          album.value = data.album;
+          album.value = data;
         });
     }
 
     userId.value = store.state.user.data.id;
     const fav = {
       user_id: userId.value.toString(),
-      album_name: route.params.name,
+      name: route.params.name,
       artist_name: route.params.artist,
       image: 'https://picsum.photos/150',
     }

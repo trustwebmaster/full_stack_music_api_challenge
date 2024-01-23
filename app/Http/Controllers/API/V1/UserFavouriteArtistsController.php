@@ -52,10 +52,6 @@ class UserFavouriteArtistsController extends Controller
 
             $existingArtist = $this->artistService->getUserArtistByName($request->user()->id ,$validatedArtist);
 
-            if($existingArtist){
-                return $this->responseService->errorResponse('Artist already exists as a favourite', ResponseAlias::HTTP_FOUND);
-            }
-
 
             $createdArtist = $this->userFavouriteArtistService->createArtist($request->user(), $validatedArtist);
 

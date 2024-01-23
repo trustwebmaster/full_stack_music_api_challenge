@@ -33,6 +33,7 @@ class AlbumController extends Controller
 
             $albums = $data['results']['albummatches']['album'] ?? [];
 
+
             return $this->responseService->successResponse($albums ?: 'No albums were found');
 
 
@@ -53,6 +54,7 @@ class AlbumController extends Controller
             $searchQuery = $request->input('album', '');
             $artist = $request->input('artist', '');
             $apiMethod = 'album.getinfo';
+
 
             $data = $this->lastFmApiService->getLastFmApiAlbum($apiMethod , $searchQuery , self::API_TYPE_ALBUM , $artist);
 

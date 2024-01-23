@@ -53,9 +53,6 @@ class UserFavouriteAlbumController extends Controller
 
             $existingAlbum = $this->albumService->getUserAlbumByNameAndArtist($request->user()->id ,$validatedAlbum);
 
-            if($existingAlbum){
-                return $this->responseService->errorResponse('Album already exists as favourite', ResponseAlias::HTTP_FOUND);
-            }
 
             $createdAlbum = $this->userFavouriteAlbumService->createAlbum($request->user() , $validatedAlbum);
 

@@ -74,8 +74,7 @@ export default {
         store
           .dispatch('searchArtist', search.value)
           .then( response => {
-              let data = response.data;
-              artists.value = data;
+              artists.value = response.data;
           });
       }
     }

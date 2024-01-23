@@ -94,9 +94,9 @@ const store = createStore({
 
     //Get requests Actions
     searchAlbum({commit}, name) {
-      return axiosClient.post('/albums' ,name)
+      return axiosClient.post('/albums' ,{ query : name })
       .then(({data}) => {
-        commit('setAlbum', data.album);
+        commit('setAlbum', data.data[0]);
         return data;
       })
         .catch((err) => {
@@ -126,18 +126,28 @@ const store = createStore({
       },
 
     //GetCurrent Album
-    getCurrentAlbum({commit}, artist, name) {
-      return axiosClient.get('/album/view/'+ artist +'/'+name)
-        .then(({data}) => {
-          commit('setCurrentAlbum', data.album);
-          return data;
-        })
-        .catch((err) => {
-          throw err;
-        });
-    },
+      getCurrentAlbum({commit},   payload) {
+          return axiosClient.post('/album/view', payload)
+              .then(({ data }) => {
+                  if (data.success) {
+                      if (data.data) {
+                          commit('setCurrentAlbum', data.album);
+                          return data.data;
+                      } else {
+                          console.warn('No album data found for the provided name.');
+                      }
+                  } else {
+                      console.error('Search album request failed:', data.message);
+                      throw new Error(data.message);
+                  }
+              })
+              .catch((err) => {
+                  console.error('Error in getCurrentAlbum action:', err);
+                  throw err;
+              });
+      },
 
-    //Get Current Artist
+      //Get Current Artist
     getCurrentArtist({commit}, name) {
         return axiosClient.post('/artist/view', { name: name })
             .then(({ data }) => {
@@ -180,16 +190,30 @@ const store = createStore({
     favoriteAlbum({commit}, payload) {
       return axiosClient.post('/favourite/albums', payload)
         .then(({data}) => {
-          commit('setFavAlbum', data.favAlbum);
+          commit('setFavAlbum', data);
           return data;
         })
     },
     favoriteArtist({commit}, payload) {
       return axiosClient.post('/favourite/artists', payload)
-        .then(({data}) => {
-          commit('setFavArtist', data.favArtist);
-          return data;
-        })
+          .then(({ data }) => {
+              if (data.success) {
+                  if (data.data) {
+                      commit('setFavArtist', data);
+                      return data;
+
+                  } else {
+                      console.warn('No favourite data found for the provided name.');
+                  }
+              } else {
+                  console.error('Search artist request failed:', data.message);
+                  throw new Error(data.message);
+              }
+          })
+          .catch((err) => {
+              console.error('Error in setFavArtist action:', err);
+              throw err;
+          });
     },
 
     //Get currentFav Actions
