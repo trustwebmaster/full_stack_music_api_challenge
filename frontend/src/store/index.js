@@ -71,11 +71,20 @@ const store = createStore({
     },
     login({commit}, payload) {
       return axiosClient.post('/login', payload)
-        .then(({data}) => {
-          commit('setUser', data.user);
-          commit('setToken', data.access_token)
-          return data;
-        })
+          .then(({ data }) => {
+              if (data) {
+                      commit('setUser', data.user);
+                      commit('setToken', data.access_token)
+                      return data;
+              } else {
+                  console.error('Login Failed Wrong Details :', data.message);
+                  throw new Error(data.message);
+              }
+          })
+          .catch((err) => {
+              console.error('Error in logging in user:', err);
+              throw err;
+          });
     },
     getUser({commit}) {
       return axiosClient.get('/user')

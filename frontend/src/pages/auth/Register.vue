@@ -121,12 +121,12 @@
 
 
 <script>
-import AuthLayout  from "../../components/layouts/auth/SignInLayout.vue";
+import AuthLayout from "../../components/layouts/auth/SignInLayout.vue";
 import {LockClosedIcon} from "@heroicons/vue/20/solid";
-import store from "../../store/index.js";
 import {useRouter} from "vue-router";
+import store from "../../store/index.js";
+import {ref} from "vue";
 import Alert from "../../components/layouts/Flash.vue";
-import { ref } from "vue";
 
 export default {
     components: {

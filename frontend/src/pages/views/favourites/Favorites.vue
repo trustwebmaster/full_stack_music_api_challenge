@@ -2,7 +2,6 @@
   <PageComponent>
     <div>
       <div class="float-left">
-        <!--        Shown when there is no item in both albums and artists          -->
         <div v-if="!favoriteAlbums.length && !favoriteArtists.length" id="alert-border-4"
              class="flex p-4 mb-4 text-yellow-800 border-t-4 border-yellow-300 bg-yellow-50 dark:text-yellow-300 dark:bg-gray-800 dark:border-yellow-800"
              role="alert">
@@ -12,7 +11,7 @@
                   clip-rule="evenodd"></path>
           </svg>
           <div class="ml-3 text-sm font-medium">
-            No item in favorites. Albums or artist you choose as favorites will show here.
+            No Favorites
           </div>
           <button type="button"
                   class="ml-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700"
@@ -30,12 +29,12 @@
         <!--        This shows all added favorite albums          -->
         <div v-if="favoriteAlbums.length">
           <h4 class="inline-flex text-left px-4 py-2 text-md font-medium text-center text-gray-900">
-            Albums
+            Your favorite albums
           </h4>
           <div
             v-for="favoriteAlbum in favoriteAlbums"
             :key="favoriteAlbum.id">
-            <div id="alert-5" class="flex p-4 bg-gray-50 dark:bg-gray-800" role="alert">
+            <div id="alert-5" class="mt-4 flex p-4 bg-gray-50 dark:bg-gray-800" role="alert">
               <div :to="{ name: 'AlbumView', params: {artist: favoriteAlbum.album_slug, name: favoriteAlbum.name} }" class="cursor-pointer flex">
                 <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-800 dark:text-gray-300"
                      fill="currentColor"
@@ -70,12 +69,12 @@
         <!--        This shows all added favorite artist          -->
         <div v-if="favoriteArtists.length">
           <h4 class="inline-flex text-left px-4 py-2 text-md font-medium text-center text-gray-900">
-            Artist
+            Your favorite artists
           </h4>
           <div
             v-for="favoriteArtist in favoriteArtists"
             :key="favoriteArtist.id">
-            <div id="alert-5" class="flex p-4 bg-gray-50 dark:bg-gray-800" role="alert">
+            <div id="alert-5" class="flex mt-4 p-4 bg-gray-50 dark:bg-gray-800" role="alert">
               <router-link :to="{ name: 'ArtistView', params: {name: favoriteArtist.name} }" class="cursor-pointer flex">
                 <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-800 dark:text-gray-300"
                      fill="currentColor"

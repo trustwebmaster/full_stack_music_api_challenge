@@ -1,66 +1,3 @@
-<script>
-import AuthLayout from "../../components/layouts/auth/SignInLayout.vue";
-import {LockClosedIcon} from "@heroicons/vue/20/solid";
-import {useRouter} from "vue-router";
-import store from "../../store/index.js";
-import {ref} from "vue";
-import Alert from "../../components/layouts/Flash.vue";
-
-export default {
-    components: {
-        LockClosedIcon,
-        AuthLayout,
-        Alert
-    },
-
-    setup() {
-        const router = useRouter();
-        let loading = ref(false);
-        const user = {
-            email: '',
-            password: '',
-            remember: false
-        }
-        let errorMsg = ref('');
-
-        function login(ev) {
-            ev.preventDefault();
-            loading.value = true;
-            store
-                .dispatch("login", user)
-                .then(() => {
-                    loading.value = false;
-                    router.push({
-                        name: "Artists",
-                    });
-                })
-                .catch((err) => {
-                    loading.value = false;
-                    throw err
-                });
-        }
-
-        function google(ev) {
-            ev.preventDefault();
-            store
-                .dispatch("google")
-                .then(() => {
-                    loading.value = false;
-                    router.push({
-                        name: "Google",
-                    });
-                })
-                .catch((err) => {
-                    loading.value = false;
-                    throw err
-                });
-        }
-
-        return { user, google, login, errorMsg, loading,
-        };
-    },
-}
-</script>
 
 <template>
     <div class="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -133,9 +70,6 @@ export default {
 
                 <div>
                     <div class="relative mt-10">
-                        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div class="w-full border-t border-gray-200" />
-                        </div>
                         <div class="relative flex justify-center text-sm font-medium leading-6">
                             <span class="bg-white px-6 text-gray-900">Or continue with</span>
                         </div>
@@ -153,12 +87,85 @@ export default {
                             <span class="text-sm font-semibold leading-6">Sign in with Google</span>
                         </button>
                     </div>
+
+                    <div class="mt-6 text-sm font-medium text-gray-500 dark:text-gray-300">
+                        Not registered?
+                        <router-link :to="{ name: 'Register' }" class="text-blue-700 hover:underline dark:text-blue-500">
+                            Register for free
+                        </router-link>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped>
-/* Add any scoped styles if needed */
-</style>
+<script>
+import AuthLayout from "../../components/layouts/auth/SignInLayout.vue";
+import {LockClosedIcon} from "@heroicons/vue/20/solid";
+import {useRouter} from "vue-router";
+import store from "../../store/index.js";
+import {ref} from "vue";
+import Alert from "../../components/layouts/Flash.vue";
+
+export default {
+    components: {
+        LockClosedIcon,
+        AuthLayout,
+        Alert
+    },
+
+    setup() {
+        const router = useRouter();
+        let loading = ref(false);
+        const user = {
+            email: '',
+            password: '',
+            remember: false
+        }
+        let errorMsg = ref('');
+
+        function login(ev) {
+            ev.preventDefault();
+            loading.value = true;
+            store
+                .dispatch("login", user)
+                .then(() => {
+                    loading.value = false;
+                    router.push({
+                        name: "Artists",
+                    });
+                })
+                .catch((err) => {
+                    loading.value = false;
+                    throw err
+                });
+        }
+
+        function google(ev) {
+            ev.preventDefault();
+            store
+                .dispatch("google")
+                .then(() => {
+                    loading.value = false;
+                    router.push({
+                        name: "Google",
+                    });
+                })
+                .catch((err) => {
+                    loading.value = false;
+                    throw err
+                });
+        }
+
+        return {
+            user,
+            google,
+            login,
+            errorMsg,
+            loading,
+        };
+    },
+}
+</script>
