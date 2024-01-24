@@ -30,11 +30,11 @@ Route::prefix('auth')->group( function () {
     Route::get('/google/callback',  GoogleCallbackController::class);
 });
 
-Route::post('artists' , [ArtistsController::class , 'searchArtists']);
-Route::post('artist/view' , [ArtistsController::class , 'viewArtist']);
+Route::post('artists' , [ArtistsController::class , 'searchArtists'])->name('artists');
+Route::post('artist/view' , [ArtistsController::class , 'viewArtist'])->name('artist.view');
 
-Route::post('albums' , [AlbumController::class , 'searchAlbums']);
-Route::post('album/view' , [AlbumController::class , 'viewAlbum']);
+Route::post('albums' , [AlbumController::class , 'searchAlbums'])->name('albums');
+Route::post('album/view' , [AlbumController::class , 'viewAlbum'])->name('album.view');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/favourite/albums', UserFavouriteAlbumController::class);
