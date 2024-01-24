@@ -56,6 +56,7 @@ const store = createStore({
     googleCallback({commit}, payload) {
       return axiosClient.get('/auth/google/callback')
         .then(({data}) => {
+            console.log("We have arrived here" , data);
           commit('setUser', data.user);
           commit('setToken', data.access_token)
           return data;
