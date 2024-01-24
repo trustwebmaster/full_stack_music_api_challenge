@@ -90,8 +90,8 @@
 
                     <div class="mt-6 text-sm font-medium text-gray-500 dark:text-gray-300">
                         Not registered?
-                        <router-link :to="{ name: 'Register' }" class="text-blue-700 hover:underline dark:text-blue-500">
-                            Register for free
+                        <router-link :to="{ name: 'Register' }" class="text-blue-700 hover:underline dark:text-blue-500 font-bold">
+                           Register
                         </router-link>
                     </div>
 

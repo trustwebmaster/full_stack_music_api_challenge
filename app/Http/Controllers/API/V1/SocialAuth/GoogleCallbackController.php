@@ -38,9 +38,12 @@ class GoogleCallbackController extends Controller
         $tokenResult = $googleSocialUser->createToken('googleSignIn' , ['*'], now()->addWeek());
         $accessToken = $tokenResult->plainTextToken;
 
-       Auth::login($googleSocialUser);
+        return response()->json([
+            'user' => $googleSocialUser,
+            'access_token' => $accessToken
+        ], ResponseAlias::HTTP_OK);
 
-       return redirect()->route('album.view');
+
 
     }
 
